@@ -30,7 +30,7 @@ var app            = express();
 var HTTP_PORT      = 8000;
 var HTTPS_PORT     = 9444;
 
-MongoClient.connect('mongodb://localhost:27017/test', function(err, db) {
+MongoClient.connect('mongodb://mo14248_glospref:glospref1A@mongo0.mydevil.net:27017/mo14248_glospref', function(err, db) {
 	"use strict";
 	if(err) throw err;
 
