@@ -7,7 +7,7 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var MongoClient    = require('mongodb').MongoClient, // Driver for connecting to MongoDB
 	routes = require('./routes'); // Routes for our application
-
+var config = require('./config');
 
 // This line is from the Node.js HTTPS documentation.
 //http://wiki.openbravo.com/wiki/How_To_Configure_SSL_For_Windows
@@ -30,7 +30,7 @@ var app            = express();
 var HTTP_PORT      = 8000;
 var HTTPS_PORT     = 9444;
 
-MongoClient.connect('mongodb://localhost:27017/test', function(err, db) {
+MongoClient.connect(config.MONGO, function(err, db) {
 	"use strict";
 	if(err) throw err;
 
