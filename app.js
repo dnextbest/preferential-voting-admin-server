@@ -8,6 +8,7 @@ var methodOverride = require('method-override');
 var MongoClient    = require('mongodb').MongoClient, // Driver for connecting to MongoDB
 	routes = require('./routes'); // Routes for our application
 var config = require('./config');
+var directory = require('serve-index');
 
 // This line is from the Node.js HTTPS documentation.
 //http://wiki.openbravo.com/wiki/How_To_Configure_SSL_For_Windows
@@ -38,6 +39,9 @@ MongoClient.connect(config.MONGO, function(err, db) {
 	app.use(bodyParser());                      // pull information from html in POST
 	app.use(methodOverride());                  // simulate DELETE and PUT
 
+	var oneDay = 86400000;
+	app.use(express.static('filesdir', { maxAge: oneDay }));
+	app.use(directory('filesdir', {'icons': true}))
 
     // Application routes
     routes(app, db);

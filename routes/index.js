@@ -13,8 +13,7 @@ module.exports = exports = function(app, db) {
     // The main page of the blog
     app.get('/', contentHandler.showMainPage);
 
-    app.get('/api/stats', contentHandler.insertEntry);
-
-    app.post('/api/stats', contentHandler.insertEntry);
-
+    app.post('/api/voteDefs', contentHandler.insertVoteDef);
+    app.get('/api/voteDefs', contentHandler.getVoteDefs);
+    app.get('/api/voteDefs/:id', contentHandler.getVoteDef);
 }

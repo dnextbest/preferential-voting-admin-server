@@ -1,0 +1,29 @@
+#%RAML 0.8
+---
+title: Example API
+baseUri: http://localhost:8000
+
+/api/voteDefs:
+  displayName: Vote Definition
+  put:
+    responses:
+      200:
+      201:
+      203:
+  get:
+    description: Get vote definitions
+    headers:
+      application/json:
+    responses:
+      200:
+  /{voteDefId}:
+    description: Vote definition id
+    uriParameters:
+      voteDefId:
+        required: true
+        description: Vote definition id
+    get:
+      description: |
+        Gets vote definition by id 
+      responses:
+        200:
