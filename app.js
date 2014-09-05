@@ -39,9 +39,9 @@ MongoClient.connect(config.MONGO, function(err, db) {
 	app.use(bodyParser());                      // pull information from html in POST
 	app.use(methodOverride());                  // simulate DELETE and PUT
 
-	var oneDay = 86400000;
-	app.use(express.static('filesdir', { maxAge: oneDay }));
-	app.use(directory('filesdir', {'icons': true}))
+	// var oneDay = 86400000;
+	// app.use(express.static('filesdir', { maxAge: oneDay }));
+	// app.use(directory('filesdir', {'icons': true}))
 
     // Application routes
     routes(app, db);
@@ -54,5 +54,6 @@ MongoClient.connect(config.MONGO, function(err, db) {
 
     console.log("App listening on HTTP port " + HTTP_PORT);
     console.log("App listening on HTTPS port " + HTTPS_PORT);
+
 
 });

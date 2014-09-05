@@ -7,19 +7,10 @@ function ContentHandler (db) {
 
 	this.showMainPage = function(req,res,next){
 		res.type('application/json');
-		console.log("params:" + JSON.stringify(req.params));
-		console.log("headers:" + JSON.stringify(req.headers));
-		console.log("body:" + JSON.stringify(req.body));
-		console.log("route:"+ JSON.stringify(req.route));
-		console.log("IP:" + req.ip);
-		console.log("path:" + req.path);
-		console.log("");
-
 		return res.send({msg: "Hello in da app!"});
 	}
 this.insertVoteDef = function(req, res, next) {
     "use strict";
-    log(req,res);
     res.type('application/json'); 
 
     var voteDef = req.body
@@ -36,24 +27,41 @@ this.insertVoteDef = function(req, res, next) {
     }
 	this.insertVoteDef = function(req, res, next) {
 		"use strict";
-		log(req,res);
 		res.type('application/json'); 
 
     var voteDef = req.body
     voteDef.dateCreated = Date.now();
 
-    voteDefs.insertVoteDef(req.body, function(err, permalink) {
+    voteDefs.insertVoteDef(req.body, function(err, doc) {
       	"use strict";
 
       	if (err) return next(err);
-
-      	return res.send({msg: "OK"});
+console.log(JSON.stringify(doc));
+      	return res.send(doc);
     });
       
     }
+
+  this.updateVoteDef = function(req, res, next) {
+    "use strict";
+    res.type('application/json'); 
+
+    var voteDef = req.body
+    voteDef.lastUpdated = Date.now();
+
+    voteDefs.updateVoteDef(req.body, function(err, doc) {
+        "use strict";
+
+        if (err) return next(err);
+        
+        console.log(JSON.stringify(doc));
+        return res.send(doc);
+    });
+      
+  }
+
   this.getVoteDef = function(req, res, next) {
     "use strict";
-    log(req,res);
     res.type('application/json'); 
     var id = req.params.id
     console.log("ID : " + id);
@@ -73,7 +81,6 @@ this.insertVoteDef = function(req, res, next) {
   }
   this.getVoteDefs = function(req, res, next) {
     "use strict";
-    log(req,res);
     res.type('application/json'); 
     var pageSize;
     if(req.query.pageSize){
@@ -100,16 +107,5 @@ this.insertVoteDef = function(req, res, next) {
     });
       
   }
-
-    function log(req,res){
-      console.log("POST:");
-      console.log("headers:\t" + JSON.stringify(req.headers)); 
-      console.log("params:\t\t" + JSON.stringify(req.params));
-      console.log("body:\t\t" + JSON.stringify(req.body));
-      console.log("route:\t\t"+ JSON.stringify(req.route));
-      console.log("IP:\t\t" + JSON.stringify(req.ip));
-      console.log("path:\t\t" + req.path);
-      console.log("");
-    }
-  }
-  module.exports = ContentHandler;
+}
+module.exports = ContentHandler;

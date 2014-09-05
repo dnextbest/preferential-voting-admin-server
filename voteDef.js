@@ -13,16 +13,32 @@ function VoteDefDAO(db) {
 
     var voteDef = db.collection("voteDef");
 
+    this.validate = function(voteDef){
+        console.log('validate : ' , voteDef);
+        if(!voteDef.description || !voteDef.email || !voteDef.fields){
+            return false;
+        }
+        return true;
+    }
+
     this.insertVoteDef = function (entry, callback) {
     	"use strict";
     	console.log("inserting VoteDef entry" + JSON.stringify(entry));
 
-    	voteDef.insert(entry,function(err,inserted){
-    		"use strict";
-    		console.log('inserted.. ' + JSON.stringify(inserted));
-    		if(err)return callback(err,null);
-    		callback(err, inserted._id);
-    	});
+       if(this.validate(entry)){
+
+        	voteDef.insert(entry,function(err,inserted){
+        		"use strict";
+        		console.log('inserted.. ' + JSON.stringify(inserted));
+        		if(err)return callback(err,null);
+
+        		callback(err, inserted[0]);
+        	});
+        }else{
+            var error = new Error('Bad request'); 
+            error.code = '400';
+            throw error;
+        }
     }
 
     this.getVoteDefs = function (skip, limit, callback) {
@@ -66,6 +82,36 @@ function VoteDefDAO(db) {
     		callback(err, items);
     	});
     };
+
+    this.updateVoteDef = function (entry, callback) {
+        "use strict";
+        console.log("updating VoteDef entry" + JSON.stringify(entry));
+
+       if(entry._id && this.validate(entry)){
+            var toUpdate = JSON.parse(JSON.stringify(entry));;
+            var obj_id = ObjectID.createFromHexString(entry._id);
+            delete entry._id; // remove _id from the object to make save work (_id is readonly)
+            voteDef.update(
+                {_id: obj_id},
+                entry,
+                function(err, cnt, status){
+                    "use strict";
+                    console.log('updated.. ' + JSON.stringify(toUpdate));
+                    if(err)return callback(err,null);
+                    if(cnt=0) throw new Error("Could not update object");
+
+                    callback(err, toUpdate);
+                }
+            );
+        }else{
+            var error = new Error('Bad request'); 
+            error.code = '400';
+            throw error;
+        }
+    }
+
+
+
 
 }
 
