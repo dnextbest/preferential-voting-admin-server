@@ -26,3 +26,22 @@ Response:
 
 
 curl -X POST -H "Content-Type: application/json" -d '{"description":"test", "email": "sadsad", "fields": [{"id": 1, "value": "Option one .."},{"id": 1, "value": "Option two .."}]}' http://localhost:8000/api/voteDefs
+
+Response:
+    {
+       "description": "test",
+       "email": "sadsad",
+       "fields":
+       [
+           {
+               "id": 1,
+               "value": "Option one .."
+           },
+           {
+               "id": 2,
+               "value": "Option two .."
+           }
+       ],
+       "dateCreated": 1409874876233,
+       "_id": "5408fbbc4bee8b5641efc651"
+    }
