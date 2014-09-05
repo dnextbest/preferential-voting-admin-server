@@ -25,7 +25,7 @@ Response:
 
 
 
-curl -X POST -H "Content-Type: application/json" -d '{"description":"test", "email": "sadsad", "fields": [{"id": 1, "value": "Option one .."},{"id": 1, "value": "Option two .."}]}' http://localhost:8000/api/voteDefs
+curl -X POST -H "Content-Type: application/json" -d '{"description":"test", "email": "sadsad", "fields": [{"id": 1, "value": "Option one .."},{"id": 2, "value": "Option two .."}]}' http://localhost:8000/api/voteDefs
 
 Response:
     {
@@ -45,3 +45,8 @@ Response:
        "dateCreated": 1409874876233,
        "_id": "5408fbbc4bee8b5641efc651"
     }
+
+curl -X PUT -H "Content-Type: application/json" -d '{"description":"updated test", "email": "sadsad", "fields": [{"id": 1, "value": "Option one .."},{"id": 2, "value": "Option two .."},{"id": 3, "value": "Option three .."}]}' http://localhost:8000/api/voteDefs
+
+Response - updated object:
+{"description":"updated test", "email": "sadsad", "fields": [{"id": 1, "value": "Option one .."},{"id": 2, "value": "Option two .."},{"id": 3, "value": "Option three .."}]}
