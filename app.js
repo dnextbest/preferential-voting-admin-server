@@ -51,7 +51,6 @@ MongoClient.connect(config.MONGO, function(err, db) {
 	// Create an HTTPS service identical to the HTTP service.
 	//https.createServer(options, app).listen(HTTPS_PORT);
 
-
     console.log("App listening on HTTP port " + HTTP_PORT);
     console.log("App listening on HTTPS port " + HTTPS_PORT);
 
