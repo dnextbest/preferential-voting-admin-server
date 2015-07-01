@@ -1,97 +1,74 @@
-var VoteDefDAO = require('../voteDef').VoteDefDAO;
-/* The ContentHandler must be constructed with a connected db */
-function ContentHandler (db) {
-	"use strict";
+var mongoose = require('mongoose');
+var Todo = require('../models/voteDefinitions.js');
 
-	var voteDefs = new VoteDefDAO(db);
+function ContentHandler() {
+  "use strict";
 
-	this.showMainPage = function(req,res,next){
-		res.type('application/json');
-		return res.send({msg: "Hello in da app!"});
-	}
-this.insertVoteDef = function(req, res, next) {
+  this.showMainPage = function(req, res, next) {
+    res.type('application/json');
+    return res.send({
+      msg: "Hello in da app!"
+    });
+  };
+
+  this.insertVoteDef = function(req, res, next) {
     "use strict";
-    res.type('application/json'); 
+    res.type('application/json');
 
     var voteDef = req.body
     voteDef.dateCreated = Date.now();
 
-    voteDefs.insertVoteDef(req.body, function(err, permalink) {
-        "use strict";
+    voteDefinition.create(req.body, function(err, voteDefinition) {
+      if (err) return next(err);
 
-        if (err) return next(err);
-
-        return res.send({msg: "OK"});
+      res.json(voteDefinition);
     });
-      
-    }
-	this.insertVoteDef = function(req, res, next) {
-		"use strict";
-		res.type('application/json'); 
-
-    var voteDef = req.body
-    voteDef.dateCreated = Date.now();
-
-    voteDefs.insertVoteDef(req.body, function(err, doc) {
-      	"use strict";
-
-      	if (err) return next(err);
-console.log(JSON.stringify(doc));
-      	return res.send(doc);
-    });
-      
-    }
+  };
 
   this.updateVoteDef = function(req, res, next) {
     "use strict";
-    res.type('application/json'); 
+    res.type('application/json');
 
     var voteDef = req.body
     voteDef.lastUpdated = Date.now();
 
-    voteDefs.updateVoteDef(req.body, function(err, doc) {
-        "use strict";
-
-        if (err) return next(err);
-        
-        console.log(JSON.stringify(doc));
-        return res.send(doc);
+    voteDefinition.findByIdAndUpdate(req.params.id, req.body, function(err, voteDefinition) {
+      if (err) return next(err);
+      res.json(voteDefinition);
     });
-      
-  }
+  };
 
   this.getVoteDef = function(req, res, next) {
     "use strict";
-    res.type('application/json'); 
+    res.type('application/json');
     var id = req.params.id
     console.log("ID : " + id);
-    voteDefs.getVoteDef(id, function(err, doc) {
-        "use strict";
+    voteDefinition.findById(id, function(err, doc) {
+      if (err) return next(err);
 
-        if (err) return next(err);
-        console.log(JSON.stringify(doc));
-        if(doc){
-          return res.send(doc);
-        }else {
-          return res.send({})
-        }
-        
+      console.log(JSON.stringify(doc));
+
+      if (doc) {
+        return res.send(doc);
+      } else {
+        return res.send({})
+      }
     });
-      
-  }
+  };
+
   this.getVoteDefs = function(req, res, next) {
     "use strict";
-    res.type('application/json'); 
+    res.type('application/json');
     var pageSize;
-    if(req.query.pageSize){
+    if (req.query.pageSize) {
       pageSize = req.query.pageSize;
-    } else{
+    } else {
       pageSize = 10;
     }
     var page;
-    if(req.query.page){
+    if (req.query.page) {
       page = req.query.page - 1;
-    } else{
+    } else {
       page = 0;
     }
 
@@ -99,13 +76,13 @@ console.log(JSON.stringify(doc));
     console.log(pageSize);
 
     voteDefs.getVoteDefs(skip, pageSize, function(err, docs) {
-        "use strict";
+      "use strict";
 
-        if (err) return next(err);
+      if (err) return next(err);
 
-        return res.send(docs);
+      return res.send(docs);
     });
-      
-  }
-}
+  };
+};
+
 module.exports = ContentHandler;

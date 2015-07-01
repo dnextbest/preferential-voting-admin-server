@@ -4,13 +4,13 @@ var SessionHandler = require('./session'),
   CORSHandler = require('./cors').corsHandler,
   HttpLogger = require('./httpLogger').httpLogger;
 
-module.exports = exports = function(app, db) {
+module.exports = exports = function(app) {
 
-  var sessionHandler = new SessionHandler(db);
-  var contentHandler = new ContentHandler(db);
+  //var sessionHandler = new SessionHandler(db);
+  var contentHandler = new ContentHandler();
 
   // Middleware to see if a user is logged in
-  //app.use(sessionHandler.isLoggedInMiddleware);
+  // app.use(sessionHandler.isLoggedInMiddleware);
 
   app.use(ErrorHandler);
   app.use(CORSHandler);
