@@ -43,7 +43,9 @@ var HTTPS_PORT = 9444;
 
 
 app.use(morgan('dev')); // log every request to the console
-app.use(bodyParser()); // pull information from html in POST
+app.use(bodyParser.json()); // pull information from html in POST
+app.use(bodyParser.urlencoded()); // pull information from html in POST
+
 app.use(methodOverride()); // simulate DELETE and PUT
 
 // var oneDay = 86400000;

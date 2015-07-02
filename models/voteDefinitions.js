@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var voteDefinitionsSchema = mongoose.Schema({
   "description": String,
-  "email": String,
+  "emails": [String],
   "fields": [{
     "id": Number,
     "value": String

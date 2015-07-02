@@ -1,21 +1,36 @@
 #%RAML 0.8
 ---
-title: Example API
+title: Preferential Voting Admin Server
 baseUri: http://localhost:8000
 
 /api/voteDefs:
   displayName: Vote Definition
-  put:
-    responses:
-      200:
-      201:
-      203:
   get:
-    description: Get vote definitions
+    description: Get list of vote definitions
     headers:
       application/json:
     responses:
       200:
+  put:
+    description: Updates existing vote definition
+    headers:
+      application/json:
+    responses:
+      200:
+      201:
+      203:
+  post:
+    description: Creates new vote definition
+    body:
+      application/json:        
+    headers:
+      application/json:
+    responses:
+      200:
+      201:
+      203:
+      403:
+
   /{voteDefId}:
     description: Vote definition id
     uriParameters:
@@ -24,6 +39,6 @@ baseUri: http://localhost:8000
         description: Vote definition id
     get:
       description: |
-        Gets vote definition by id 
+        Gets vote definition by id
       responses:
         200:

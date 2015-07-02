@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Todo = require('../models/voteDefinitions.js');
+var voteDefinition = require('../models/voteDefinitions.js');
 
 function ContentHandler() {
   "use strict";
@@ -75,7 +75,7 @@ function ContentHandler() {
     var skip = pageSize * page;
     console.log(pageSize);
 
-    voteDefs.getVoteDefs(skip, pageSize, function(err, docs) {
+    voteDefinition.find().skip(skip).limit(pageSize).exec(function(err, docs) {
       "use strict";
 
       if (err) return next(err);
