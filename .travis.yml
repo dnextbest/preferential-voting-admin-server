@@ -5,4 +5,4 @@ node_js:
 deploy:
   provider: heroku
   api_key: $HEROKU_KEY
-  app: my-app-123
+  app: preferential-voting-admin
