@@ -2,3 +2,7 @@ language: node_js
 node_js:
   - 0.12
   - 0.10
+deploy:
+  provider: heroku
+  api_key: HEROKU_KEY
+  app: my-app-123
